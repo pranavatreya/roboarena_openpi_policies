@@ -13,23 +13,26 @@ from openpi.training import checkpoints as _checkpoints
 from openpi.training import config as _config
 import openpi.transforms as transforms
 
-
 @dataclasses.dataclass
-class PolicyConfig:
-    model: _model.BaseModel
-    norm_stats: dict[str, transforms.NormStats]
-
-    input_layers: Sequence[transforms.DataTransformFn]
-    output_layers: Sequence[transforms.DataTransformFn]
-
-    model_type: _model.ModelType = _model.ModelType.PI0
-    default_prompt: str | None = None
-    sample_kwargs: dict[str, Any] | None = None
-
+class PolicyServerConfig:
+    # Resolution that images get resized to client-side, None means no resizing.
+    # It's beneficial to resize images to the desired resolution client-side for faster communication.
+    image_resolution: tuple[int, int] | None = (126, 224) # we will zero-pad (preserving aspect ratio) to make this shape (224, 224)
+    # Whether or not wrist camera image(s) should be sent.
+    needs_wrist_camera: bool = True
+    # Number of external cameras to send.
+    n_external_cameras: int = 1  # can be in [0, 1, 2]
+    # Whether or not stereo camera image(s) should be sent.
+    needs_stereo_camera: bool = False
+    # Whether or not the unique eval session id should be sent (e.g. for policies that want to keep track of history).
+    needs_session_id: bool = False
+    # Which action space to use.
+    action_space: str = "joint_position"  # can be in ["joint_position", "joint_velocity"]
 
 def create_trained_policy(
     train_config: _config.TrainConfig,
     checkpoint_dir: pathlib.Path | str,
+    action_space: str,
     *,
     repack_transforms: transforms.Group | None = None,
     sample_kwargs: dict[str, Any] | None = None,
@@ -41,6 +44,7 @@ def create_trained_policy(
     Args:
         train_config: The training config to use to create the model.
         checkpoint_dir: The directory to load the model from.
+        action_space: either "joint_position" or "joint_velocity"
         repack_transforms: Optional transforms that will be applied before any other transforms.
         sample_kwargs: The kwargs to pass to the `sample_actions` method. If not provided, the default
             kwargs will be used.
@@ -49,6 +53,8 @@ def create_trained_policy(
         norm_stats: The norm stats to use for the policy. If not provided, the norm stats will be loaded
             from the checkpoint directory.
     """
+    assert action_space in ["joint_position", "joint_velocity"], "Error: unrecognized action space"
+
     repack_transforms = repack_transforms or transforms.Group()
     checkpoint_dir = download.maybe_download(str(checkpoint_dir))
 
@@ -79,5 +85,5 @@ def create_trained_policy(
             *repack_transforms.outputs,
         ],
         sample_kwargs=sample_kwargs,
-        metadata=train_config.policy_metadata,
+        metadata=PolicyServerConfig(action_space=action_space),
     )

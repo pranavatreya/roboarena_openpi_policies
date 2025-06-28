@@ -11,7 +11,6 @@ import websockets.frames
 
 logger = logging.getLogger(__name__)
 
-
 class WebsocketPolicyServer:
     """Serves a policy using the websocket protocol. See websocket_client_policy.py for a client implementation.
 
@@ -23,7 +22,7 @@ class WebsocketPolicyServer:
         policy: _base_policy.BasePolicy,
         host: str = "0.0.0.0",
         port: int | None = None,
-        metadata: dict | None = None,
+        metadata = None,
     ) -> None:
         self._policy = policy
         self._host = host
@@ -49,7 +48,7 @@ class WebsocketPolicyServer:
         logger.info(f"Connection from {websocket.remote_address} opened")
         packer = msgpack_numpy.Packer()
 
-        await websocket.send(packer.pack(self._metadata))
+        await websocket.send(packer.pack(dataclasses.asdict(self._metadata)))
 
         prev_total_time = None
         while True:
