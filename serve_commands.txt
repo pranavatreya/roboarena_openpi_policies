@@ -1,5 +1,5 @@
 # pi0_fast_droid
-uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=pi0_fast_droid --policy.dir=checkpoints/pi0_fast_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=pi0_fast_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/pi0_fast_droid
 
-# paligemma_fast_droid
-uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=paligemma_fast_droid --policy.dir=checkpoints/paligemma_fast_droid
+# pi0_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=pi0_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/pi0_droid
