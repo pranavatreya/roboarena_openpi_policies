@@ -4,6 +4,7 @@ import logging
 import time
 import traceback
 import dataclasses
+import numpy as np
 
 from openpi_client import base_policy as _base_policy
 from openpi_client import msgpack_numpy
@@ -60,9 +61,13 @@ class WebsocketPolicyServer:
                 infer_time = time.monotonic()
                 
                 # Hijack the observation and zero-pad images to 224x224
-                for key, val in obs:
-                    if val.dtype == np.uint8: # an image
-                        obs[key] = np.concatenate([np.zeros((49, 224, 3), dtype=np.uint8), val, np.zeros((49, 224, 3), dtype=np.uint8)])
+                image_found = False
+                for key in obs.keys():
+                    val = obs[key]
+                    if type(val) == np.ndarray and val.dtype == np.uint8: # an image
+                        obs[key] = np.concatenate([np.zeros((49, 224, 3), dtype=np.uint8), val, np.zeros((49, 224, 3), dtype=np.uint8)], axis=0)
+                        image_found = True
+                assert image_found
 
                 action = self._policy.infer(obs)
                 infer_time = time.monotonic() - infer_time
