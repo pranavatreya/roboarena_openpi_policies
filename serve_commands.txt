@@ -3,3 +3,18 @@ uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:
 
 # pi0_droid
 uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=pi0_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/pi0_droid
+
+# paligemma_binning_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=paligemma_binning_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/paligemma_binning_droid
+
+# paligemma_fast_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=paligemma_fast_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/paligemma_fast_droid
+
+# paligemma_fast_specialist_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=paligemma_fast_specialist_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/paligemma_fast_specialist_droid
+
+# paligemma_vq_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=paligemma_vq_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/paligemma_vq_droid
+
+# paligemma_diffusion_droid
+uv run scripts/serve_policy.py --port 9000 --action_space joint_velocity policy:checkpoint --policy.config=paligemma_diffusion_droid --policy.dir=/nfs/nfs3/users/pranav/openpi_checkpoints/paligemma_diffusion_droid
