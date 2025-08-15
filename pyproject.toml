@@ -3,7 +3,7 @@ name = "openpi"
 version = "0.1.0"
 description = "Physical Intelligence open source repo"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.13"
 license = { file = "LICENSE" }
 dependencies = [
     "augmax>=0.3.4",
@@ -15,7 +15,7 @@ dependencies = [
     "fsspec[gcs]>=2024.6.0",
     "gym-aloha>=0.1.1",
     "imageio>=2.36.1",
-    "jax[cuda12]==0.5.0",
+    "jax[tpu]==0.4.38",
     "jaxtyping==0.2.36",
     "ml_collections==1.0.0",
     "numpy>=1.26.4",
@@ -39,7 +39,6 @@ dependencies = [
     "transformers==4.48.1",
 ]
 
-
 [project.urls]
 Repository = "https://github.com/Physical-Intelligence/openpi"
 
@@ -54,6 +53,12 @@ dev = [
     "pynvml>=12.0.0",
 ]
 
+# ------------------------------------------------------------------
+# uv configuration: allow prereleases and point to the libtpu wheel
+# ------------------------------------------------------------------
+[tool.uv]
+prerelease = "allow"
+find-links = ["https://storage.googleapis.com/jax-releases/libtpu_releases.html"]
 
 [tool.uv.sources]
 openpi-client = { workspace = true }
@@ -61,57 +66,22 @@ openpi-client = { workspace = true }
 [tool.uv.workspace]
 members = ["packages/*"]
 
+# ------------------------------------------------------------------
+# Linting & tooling
+# ------------------------------------------------------------------
 [tool.ruff]
 line-length = 120
 target-version = "py311"
 extend-exclude = ["docker", "third_party"]
 
 [tool.ruff.lint]
-# https://docs.astral.sh/ruff/rules/
 select = [
-    "B",
-    "C4",
-    "DTZ",
-    "E4",
-    "E7",
-    "E9",
-    "F",
-    "FBT",
-    "FURB",
-    "I",
-    "ICN",
-    "ISC",
-    "LOG",
-    "N",
-    "PD",
-    "PERF",
-    "PIE",
-    "PLC",
-    "PLE",
-    "PLR1",
-    "PLR5",
-    "PLW",
-    "PT",
-    "PTH",
-    "Q",
-    "RET",
-    "RUF",
-    "SIM",
-    "SLF",
-    "T10",
-    "T20",
-    "UP",
-    "W",
+    "B", "C4", "DTZ", "E4", "E7", "E9", "F", "FBT", "FURB", "I", "ICN", "ISC",
+    "LOG", "N", "PD", "PERF", "PIE", "PLC", "PLE", "PLR1", "PLR5", "PLW", "PT",
+    "PTH", "Q", "RET", "RUF", "SIM", "SLF", "T10", "T20", "UP", "W",
 ]
-ignore = [
-    "F722",   # Conflicts with array typing.
-    "T201",   # We use print statements.
-    "PD008",  # Lots of false positives.
-    "ISC001", # Disabling to support ruff format.
-]
-unfixable = [
-    "B905", # Fix defaults to strict=False, which is not what we want.
-]
+ignore = ["F722", "T201", "PD008", "ISC001"]
+unfixable = ["B905"]
 
 [tool.ruff.lint.isort]
 force-single-line = true
@@ -119,6 +89,9 @@ force-sort-within-sections = true
 single-line-exclusions = ["collections.abc", "typing", "typing_extensions"]
 known-third-party = ["wandb"]
 
+# ------------------------------------------------------------------
+# Build & test config
+# ------------------------------------------------------------------
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -126,3 +99,4 @@ build-backend = "hatchling.build"
 [tool.pytest.ini_options]
 markers = ["manual: should be run manually."]
 testpaths = ["src", "scripts", "packages"]
+
