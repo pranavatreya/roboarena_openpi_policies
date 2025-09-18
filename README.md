@@ -2,10 +2,11 @@
 1. Install uv on the machine if not already installed, and deactivate conda
 2. Clone the repo
 3. Check out the branch for the policy you want to host
-4. ```GIT_LFS_SKIP_SMUDGE=1 uv sync``` then ```GIT_LFS_SKIP_SMUDGE=1 uv pip install -e .```
-5. If on GPU, set ```CUDA_VISIBLE_DEVICES```, and set ```export XLA_PYTHON_CLIENT_PREALLOCATE=false```
-6. Run the command listed in server_commands.txt
-7. If needed, run bore.pub to bypass firewall
+4. Modify package list to import the cuda version of jax, not the TPU version
+5. ```GIT_LFS_SKIP_SMUDGE=1 uv sync``` then ```GIT_LFS_SKIP_SMUDGE=1 uv pip install -e .```
+6. If on GPU, set ```CUDA_VISIBLE_DEVICES```, and set ```export XLA_PYTHON_CLIENT_PREALLOCATE=false```
+7. Run the command listed in server_commands.txt
+8. If needed, run bore.pub to bypass firewall
 
 # openpi
 
