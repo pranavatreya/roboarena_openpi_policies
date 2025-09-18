@@ -1,5 +1,5 @@
 # Steps to host policies
-1. Install uv on the machine if not already installed
+1. Install uv on the machine if not already installed, and deactivate conda
 2. Clone the repo
 3. Check out the branch for the policy you want to host
 4. ```GIT_LFS_SKIP_SMUDGE=1 uv sync``` then ```GIT_LFS_SKIP_SMUDGE=1 uv pip install -e .```
