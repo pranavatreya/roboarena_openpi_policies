@@ -1,3 +1,12 @@
+# Steps to host policies
+1. Install uv on the machine if not already installed
+2. Clone the repo
+3. Check out the branch for the policy you want to host
+4. ```GIT_LFS_SKIP_SMUDGE=1 uv sync``` then ```GIT_LFS_SKIP_SMUDGE=1 uv pip install -e .```
+5. If on GPU, set ```CUDA_VISIBLE_DEVICES```, and set ```export XLA_PYTHON_CLIENT_PREALLOCATE=false```
+6. Run the command listed in server_commands.txt
+7. If needed, run bore.pub to bypass firewall
+
 # openpi
 
 openpi holds open-source models and packages for robotics, published by the [Physical Intelligence team](https://www.physicalintelligence.company/).
