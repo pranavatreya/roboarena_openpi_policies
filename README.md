@@ -6,7 +6,7 @@
 5. ```GIT_LFS_SKIP_SMUDGE=1 uv sync``` then ```GIT_LFS_SKIP_SMUDGE=1 uv pip install -e .```
 6. If on GPU, set ```CUDA_VISIBLE_DEVICES```, and set ```export XLA_PYTHON_CLIENT_PREALLOCATE=false```
 7. Run the command listed in server_commands.txt
-8. If needed, run bore.pub to bypass firewall
+8. Bypass firewalls with cloudflare, see https://chatgpt.com/c/68cc6241-8724-8320-8d4b-4b5b03217959
 
 # openpi
 
