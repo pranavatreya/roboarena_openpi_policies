@@ -8,6 +8,9 @@
 7. Run the command listed in server_commands.txt
 8. Bypass firewalls with cloudflare, see https://chatgpt.com/c/68cc6241-8724-8320-8d4b-4b5b03217959
 
+For #8 above, I think everything is set up. So you can (most likely) just run this command inside a tmux window (just running this worked last time):
+cloudflared --no-autoupdate --config /etc/cloudflared/config.yml tunnel run robo
+
 # openpi
 
 openpi holds open-source models and packages for robotics, published by the [Physical Intelligence team](https://www.physicalintelligence.company/).
