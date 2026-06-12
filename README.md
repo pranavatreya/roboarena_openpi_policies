@@ -8,7 +8,9 @@
 7. Run the command listed in server_commands.txt
 8. Bypass firewalls with cloudflare, see https://chatgpt.com/c/68cc6241-8724-8320-8d4b-4b5b03217959
 
-For #8 above, I think everything is set up. So you can (most likely) just run this command inside a tmux window (just running this worked last time):
+(NEW on Kalman) tmux new -s cloudflared-4servers 'cloudflared --no-autoupdate --config "$HOME/.cloudflared/config.yml" tunnel run roboarena-4servers'
+
+(OLD) For #8 above, I think everything is set up. So you can (most likely) just run this command inside a tmux window (just running this worked last time):
 cloudflared tunnel run robo
 
 # openpi
